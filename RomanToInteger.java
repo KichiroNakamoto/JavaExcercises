@@ -30,8 +30,8 @@ import java.util.List;
 class Solution {
    public int romanToInt(String s) {
 
-        String[] toRoman = {"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
-        int[] toNumber = {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
+        String[] toRoman = {"I", "V", "X", "L", "C", "D", "M"};
+        int[] toNumber = {1, 5, 10, 50, 100, 500, 1000};
         char[] list = s.toCharArray();
         List<Integer> historial = new ArrayList<>();
         historial.add(0);
@@ -43,10 +43,10 @@ class Solution {
                     historial.add(toNumber[j]);
 
                     if(historial.get(i+1) > historial.get(i)){
-                        sum = sum + toNumber[j];
-                        sum = sum - 2*historial.get(i);    
+                        sum += toNumber[j];
+                        sum -= 2*historial.get(i);    
                     } else {
-                        sum = sum + toNumber[j];
+                        sum += toNumber[j];
                     } 
                 }
             }
