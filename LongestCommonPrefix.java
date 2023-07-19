@@ -11,53 +11,43 @@ SOLUTION -----------------------------------------------------------------------
 
 class Solution {
 
-    public String FindLongest(String[] stringList){
-        String longest = stringList[0];
-
-        for(int k = 0; k < stringList.length; k++){
-            if (longest.length() <= stringList[k].length()){
-                longest = stringList[k];
-            }
-        }
-
-        System.out.println(longest);
-        return longest;
-    }
-
-
     public String longestCommonPrefix(String[] strs) {
 
-        List<Character> prefix = new ArrayList<>();
+        String smallest = strs[0];
 
-        char[] reference = FindLongest(strs).toCharArray();
+        for(int k = 0; k < strs.length; k++){
+            if (smallest.length() >= strs[k].length()){
+                smallest = strs[k];
+            }
+        }
+        
         String finalStr = "";
+        char[] reference = smallest.toCharArray();
+        boolean state = false; 
 
-        for(int i = 1; i <= strs.length - 1; i++){
-            
-            char[] palabraList = strs[i].toCharArray();
+        for(int i = 0; i < reference.length; i++){
 
-                for (int j = 0; j < palabraList.length; j++){
-                    if ( reference[j] == palabraList[j]){
-                        System.out.println(reference[j]);
-                        prefix.add(reference[j]);
+            for(int j = 0; j < strs.length; j++){
 
-                    }
+                if(strs[j].toCharArray()[i] == reference[i]){
+                    state = true;
+
+                } else {
+                    state = false;
+                    break;
                 }
-               
-                           
+        
+            }
+            if(state){
+                finalStr += reference[i];
+            } else {
+                break;
+            }
+            
         }
 
-
-        StringBuilder builder = new StringBuilder();
-        for(Character c : prefix){
-            builder.append(c);
-        }
-
-        String prefixBuilder =  builder.toString();
-
-        return prefixBuilder;
-
+        return finalStr;
     }
 }
 
-//Not Solved
+//Solved
