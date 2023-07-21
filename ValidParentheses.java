@@ -13,57 +13,44 @@ SOLUTION -----------------------------------------------------------------------
 */
 
 
-
 class Solution {
 
 
-    public boolean isValid(String s) {
-        
-        char[] charac = {'(','[','{',')',']','}'};
-        char[] list = s.toCharArray();
-        int n = list.length; 
-        boolean[] stateList = new boolean[n];
-        int[] indexCharList = new int[n];
-        int[] indexPositionList = new int[n];
+    public boolean isValid(String str) {
 
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j <= 2; j++){
-                if(list[i] == charac[j]){
-                    stateList[i] = true;
-                    indexCharList[i] = j;
-                    indexPositionList[i] = i;
-                    System.out.println(stateList[i] + "," + indexCharList[i] + "," + indexPositionList[i]);
-                }
-            }
+        List<String> pares = Arrays.asList("()", "[]", "{}");
+        boolean state = false;
+        boolean reinicio = false;
 
-            for(int j = 3; j < charac.length; j++){
-                if(list[i] == charac[j]){
-                    stateList[i] = false;
-                    indexCharList[i] = j;
-                    indexPositionList[i] = i;
-                    System.out.println(stateList[i] + "," + indexCharList[i] + "," + indexPositionList[i]);
-                }
-            }
-         }
+        if(str.length() % 2 == 0){
+            state = true;
 
-        boolean totalState = true;
+            for(int i = 0; i < str.length() - 1; i++){
 
-        for(int i = 0; i < n; i++){
-            if(stateList[i] == true){
-                System.out.println("Entro 1" + "llave que abre es: " + charac[indexCharList[i]]);               
-                for(int k = 0; k <= n - 1 ; k++){
-                    if(stateList[n - k - 1] == false && indexCharList[n - k - 1] == indexCharList[i] + 3){
-                        System.out.println("Entro 2" + "llave que cierra es: " + charac[indexCharList[n - k - 1]]);
+                i = reinicio ? 0 : i;
+
+                for(int j = 0; j < pares.size(); j++){
+                    String par = Character.toString(str.charAt(i)) + 
+                    Character.toString(str.charAt(i + 1));
+                    
+                    if(par.equals(pares.get(j))){
+                        String resultado = str.replace(pares.get(j), "");
+                        reinicio = true;
+                        str = resultado;
+                        i -= 2;
+                        break;
+                    }else {
+                        reinicio = false;
                     }
                 }
             }
+        }else {
+            state = false;
+        }    
 
-            
-        }
-
-        return totalState; 
+        return (str.length() == 0 && state);
     }
 }
 
 
-//Not Solved
+//Solved
